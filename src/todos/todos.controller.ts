@@ -10,9 +10,12 @@ import {
   Put,
 } from '@nestjs/common';
 import { Todo } from 'src/todo/todo';
+import { TodosService } from './todos.service';
 
 @Controller('todos')
 export class TodosController {
+  constructor(private readonly todosService: TodosService) {}
+
   @Get()
   getAllTodos(): Todo[] {
     return [
