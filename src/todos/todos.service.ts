@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { Todo } from "../todo/todo";
+import { Injectable } from '@nestjs/common';
+import { Todo } from '../todo/todo';
 
 @Injectable()
 export class TodosService {
