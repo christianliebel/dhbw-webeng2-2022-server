@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   NotFoundException,
   Param,
   Post,
@@ -15,10 +16,13 @@ import { TodosService } from './todos.service';
 
 @Controller('todos')
 export class TodosController {
+  private readonly logger = new Logger('TodosController');
+
   constructor(private readonly todosService: TodosService) {}
 
   @Get()
   getAllTodos(): Todo[] {
+    this.logger.log('Todos were requested.');
     return this.todosService.getAll();
   }
 
