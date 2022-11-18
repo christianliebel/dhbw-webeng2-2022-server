@@ -4,11 +4,11 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpStatus,
+  HttpStatus, NotFoundException,
   Param,
   Post,
-  Put,
-} from '@nestjs/common';
+  Put
+} from "@nestjs/common";
 import { Todo } from 'src/todo/todo';
 import { TodosService } from './todos.service';
 
@@ -18,32 +18,34 @@ export class TodosController {
 
   @Get()
   getAllTodos(): Todo[] {
-    return [
-      {
-        id: 1,
-        name: 'Wäsche waschen',
-        done: false,
-      },
-    ];
+    return this.todosService.getAll();
   }
 
   @Get(':id')
   getSingleTodo(@Param('id') id: string): Todo {
-    return this.getAllTodos()[0];
-    // throw new NotFoundError();
+    const todo = this.todosService.get(+id);
+    if (todo) {
+      return todo;
+    } else {
+      throw new NotFoundException();
+    }
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createNewTodo(@Body() body: Todo): Todo {
-    return { ...body, id: 2 };
+    return this.todosService.add(body.name);
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  updateTodo(@Param('id') id: string, @Body() body: Todo): void {}
+  updateTodo(@Param('id') id: string, @Body() body: Todo): void {
+    this.todosService.update(+id, body);
+  }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteTodo(@Param('id') id: string): void {}
+  deleteTodo(@Param('id') id: string): void {
+    this.todosService.delete(+id);
+  }
 }
