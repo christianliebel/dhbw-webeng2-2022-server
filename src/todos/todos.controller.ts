@@ -4,11 +4,12 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpStatus, NotFoundException,
+  HttpStatus,
+  NotFoundException,
   Param,
   Post,
-  Put
-} from "@nestjs/common";
+  Put,
+} from '@nestjs/common';
 import { Todo } from 'src/todo/todo';
 import { TodosService } from './todos.service';
 
