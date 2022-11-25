@@ -10,7 +10,9 @@ import {
   Param,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { Todo } from 'src/todo/todo';
 import { TodosService } from './todos.service';
 
@@ -21,8 +23,9 @@ export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
   @Get()
-  getAllTodos(): Todo[] {
+  getAllTodos(@Req() req: Request): Todo[] {
     this.logger.log('Todos were requested.');
+    this.logger.log(req['auth'].sub);
     return this.todosService.getAll();
   }
 
